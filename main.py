@@ -81,9 +81,10 @@ while scanner.has_next():
                 termo += current_char
                 estado = 3
             if is_space(current_char) or is_operator(current_char) or current_char == '\n' or current_char == '':
-                estado = 4
+                estado = 0
                 token = Token(TokenType.NUMERO)
                 tokens[f'{termo}'] = (f'{token.tipo}', f'{token.atributo}')
+                termo = current_char
                 continue
         case 4:
             token = Token(TokenType.NUMERO)
@@ -122,7 +123,7 @@ while scanner.has_next():
                     tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
             elif termo.strip() in operadores_aritmeticos:
                 if termo.strip() in ['+', '-']:
-                    if termo == '+':
+                    if termo.strip() == '+':
                         token = Token(TokenType.OPAD, 'MAIS')
                         tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
                     else:
