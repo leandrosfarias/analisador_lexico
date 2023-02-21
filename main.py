@@ -95,6 +95,12 @@ while scanner.has_next():
                 elif termo.strip() == ':':
                     token = Token(TokenType.DPONTOS, '')
                     tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
+                    #if termo.strip() == '=':
+                        #token = Token(TokenType.ATRIB, '')
+                        #tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
+                    #else:
+                        #token = Token(TokenType.DPONTOS, '')
+                        #tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
                 elif termo.strip() == ',':
                     token = Token(TokenType.VIG, '')
                     tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
@@ -151,18 +157,36 @@ while scanner.has_next():
                 if current_char == '<':
                     token = Token(TokenType.OPREL, 'MENOR')
                     tokens[f'{termo}'] = (f'{token.tipo}', f'{token.atributo}')
+                    #if termo.strip() == '=':
+                        #token = Token(TokenType.MENIG, '')
+                        #tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
+                    #else:
+                        #token = Token(TokenType.MENOR, '')
+                        #tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
                 elif termo == '<=':
                     token = Token(TokenType.OPREL, 'MENIG')
                     tokens[f'{termo}'] = (f'{token.tipo}', f'{token.atributo}')
                 elif termo == '>':
                     token = Token(TokenType.OPREL, 'MAIOR')
                     tokens[f'{termo}'] = (f'{token.tipo}', f'{token.atributo}')
+                    #if termo.strip() == '=':
+                        #token = Token(TokenType.MAIG, '')
+                        #tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
+                    #else:
+                        #token = Token(TokenType.MAIOR, '')
+                        #tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
                 elif termo == '>=':
                     token = Token(TokenType.OPREL, 'MAIG')
                     tokens[f'{termo}'] = (f'{token.tipo}', f'{token.atributo}')
                 elif termo == '==':
                     token = Token(TokenType.OPREL, 'IGUAL')
                     tokens[f'{termo}'] = (f'{token.tipo}', f'{token.atributo}')
+                    #if termo.strip() == '=':
+                        #token = Token(TokenType.IGUAL, '')
+                        #tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
+                    #else:
+                        #token = Token(TokenType.ATRIB, '')
+                        #tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
                 elif termo == '<>':
                     token = Token(TokenType.OPREL, 'DIFER')
                     tokens[f'{termo}'] = (f'{token.tipo}', f'{token.atributo}')
