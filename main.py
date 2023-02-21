@@ -10,6 +10,7 @@ estado = 0
 termo = ''
 token = None
 tokens = {}
+
 current_char = ''
 
 while scanner.has_next():
@@ -63,19 +64,6 @@ while scanner.has_next():
                     tokens[f'{termo}'] = (f'{TokenType.ID}', f'{termo}')
                     termo = current_char
                 continue
-        case 2:
-            # estado = 0
-            # if current_char.isalpha():
-            #     estado = 0
-            if check_palavra_reservada(termo):
-                token = Token(termo)
-                tokens[f'{termo}'] = (f'{termo}', '')
-                # Volta para estado inicial
-                # estado = 0
-            else:
-                token = Token(TokenType.ID)
-                # Volta para estado inicial
-                # estado = 0
         case 3:
             if current_char.isdigit():
                 termo += current_char
@@ -86,11 +74,6 @@ while scanner.has_next():
                 tokens[f'{termo}'] = (f'{token.tipo}', f'{token.atributo}')
                 termo = current_char
                 continue
-        case 4:
-            token = Token(TokenType.NUMERO)
-            tokens[f'{termo}'] = (f'{token.tipo}', f'{token.atributo}')
-            termo = ''
-            estado = 0
         case 5:
             # if is_space(current_char):
             #     estado = 0
@@ -99,6 +82,9 @@ while scanner.has_next():
                 if termo.strip() == ';':
                     token = Token(TokenType.PVIG, '')
                     tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
+                    current_char = ''
+                    termo = ''
+                    estado = 0
                 elif termo.strip() == '.':
                     token = Token(TokenType.PONTO, '')
                     tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
@@ -115,9 +101,15 @@ while scanner.has_next():
                 elif termo.strip() == '(':
                     token = Token(TokenType.ABPAR, '')
                     tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
+                    current_char = ''
+                    termo = ''
+                    estado = 0
                 elif termo.strip() == ')':
                     token = Token(TokenType.FPAR, '')
                     tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
+                    current_char = ''
+                    termo = ''
+                    estado = 0
                 elif termo.strip() == ':=':
                     token = Token(TokenType.ATRIB, '')
                     tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
@@ -146,7 +138,16 @@ while scanner.has_next():
                         tokens[f'{termo}'] = (f'{token.tipo}', f'{token.atributo}')
             elif termo == operador_negacao:
                 token = Token(TokenType.OPNEG, '~')
-            elif termo in operadores_relacionais:
+            elif termo.strip() in operadores_relacionais:
+                if termo.strip() == '<' and current_char == '=':
+                    token = Token(TokenType.OPREL, 'MENIG')
+                    tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
+                elif termo.strip() == '>' and current_char == '=':
+                    token = Token(TokenType.OPREL, 'MAIG')
+                    tokens[f'{termo.strip()}'] = (f'{token.tipo}', f'{token.atributo}')
+                elif termo.strip() == '=' and current_char == '=':
+                    token = Token(TokenType.OPREL, 'IGUAL')
+                    tokens[f'{termo}'] = (f'{token.tipo}', f'{token.atributo}')
                 if current_char == '<':
                     token = Token(TokenType.OPREL, 'MENOR')
                     tokens[f'{termo}'] = (f'{token.tipo}', f'{token.atributo}')
@@ -165,6 +166,7 @@ while scanner.has_next():
                 elif termo == '<>':
                     token = Token(TokenType.OPREL, 'DIFER')
                     tokens[f'{termo}'] = (f'{token.tipo}', f'{token.atributo}')
+                estado = 0
             if is_space(current_char):
                 estado = 0
                 termo = ''
@@ -180,6 +182,7 @@ scanner.close()
 # print(f'Tipo do token: {token.tipo}')
 # for k, v in tokens.items():
 #     print(f'Token: {k}: Tipo: {v}')
+
 
 for k, v in tokens.items():
     # if v[0] == TokenType.ID:
@@ -200,5 +203,11 @@ for k, v in tokens.items():
         print(f'<ATRIBUICAO> ', end='')
     elif v[0] == 'TokenType.NUMERO':
         print(f'<NUMERO, "{k}"> ', end='')
+    elif v[0] == 'TokenType.OPREL' and v[1] == 'MENIG':
+        print(f'<MENORIGUAL> ', end='')
+    elif v[0] == 'TokenType.OPREL' and v[1] == 'MAIG':
+        print(f'<MAIORIGUAL> ', end='')
+    elif v[0] == 'TokenType.OPREL' and v[1] == 'IGUAL':
+        print(f'<IGUAL> ', end='')
     else:
         print(f'{v[0], v[1]} ', end='')

@@ -1,1 +1,6 @@
-a := 1 + 1 * 2;
+PROGRAM example;
+VAR x : INTEGER;
+BEGIN
+    x := 5 + 10;
+    WRITE(x);
+END.
