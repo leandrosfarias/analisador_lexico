@@ -1,0 +1,6 @@
+PROGRAM example;
+VAR x : INTEGER; //rtreyyrty
+BEGIN
+    x := 5 * 10;
+    WRITE(x);
+END.
